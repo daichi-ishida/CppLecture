@@ -1,11 +1,11 @@
-CXX					:= clang++
+# CXX					:= clang++
+CXX					:= g++
 BUILD_TYPE			:= Debug
 
-PROJECT				:= Day1/Unit2-TypeAndVariable
-TARGET				:= main
+PROJECT				:= Unit1
 
+TARGET				:= main
 SRCDIR				:= src/$(PROJECT)
-# SRCDIR				:= src/HomeworkCheck/$(PROJECT)
 
 BUILDDIR			:= obj
 TARGETDIR			:= bin
@@ -43,7 +43,7 @@ dependencies 	:= $(subst .$(OBJEXT),.$(DEPEXT),$(objects))
 all: directories $(TARGETDIR)/$(TARGET)
 
 run: all
-	$(TARGETDIR)/$(TARGET)
+	@$(TARGETDIR)/$(TARGET)
 
 # Remake
 remake: cleaner all
@@ -66,13 +66,13 @@ cleaner: clean
 
 # generate binary by linking objects
 $(TARGETDIR)/$(TARGET): $(objects)
-	$(CXX) $(CXXFLAGS) -o $(TARGETDIR)/$(TARGET) $^ $(LIBS)
+	@$(CXX) $(CXXFLAGS) -o $(TARGETDIR)/$(TARGET) $^ $(LIBS)
 
 # generate objects by compiling sources
 # save dependencies of source as .d
 $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
+	@$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
 # Non-File Targets
 .PHONY: all run remake clean cleaner
