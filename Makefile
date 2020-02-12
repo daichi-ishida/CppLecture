@@ -1,5 +1,7 @@
-# CXX					:= clang++
-CXX					:= g++
+# Auto detect by OS (Mac: clang++, Linux: g++)
+# you can also specify the compiler directly like "CXX := g++"
+CXX					:= Auto
+
 BUILD_TYPE			:= Debug
 
 PROJECT				:= Unit1
@@ -26,6 +28,17 @@ INCLUDE				:= -I./common
 #---------------------------------------------------------------------------------
 # DO NOT EDIT BELOW THIS LINE
 #---------------------------------------------------------------------------------
+UNAME := $(shell uname)
+
+ifeq ($(CXX), Auto)
+	ifeq ($(UNAME), Linux)
+		CXX := g++
+	else ifeq ($(UNAME), Darwin)
+		CXX := clang++
+	else
+		$(error unsupported OS)
+	endif
+endif
 
 ifeq ($(BUILD_TYPE),Release)
 	CXXFLAGS += $(CXX_RELEASE_FLAGS)
